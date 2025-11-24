@@ -45,8 +45,10 @@ pnpm test
 
 The test suite will:
 - Check server health
-- Test chat endpoint
-- Test streaming chat endpoint
+- Test bot endpoint
+- Test bot with URL summary
+- Test streaming bot endpoint
+- Test streaming bot with URL summary
 - Test conversation endpoint
 
 Make sure the server is running (`pnpm dev` in another terminal) before running tests.
@@ -59,32 +61,54 @@ GET /health
 ```
 Returns server status.
 
-### Chat (Single Message)
+### Bot (Single Message)
 ```
-POST /api/chat
+POST /api/bot
 Content-Type: application/json
 
 {
-  "message": "Your message here",
-  "model": "gpt-4o-mini" // optional
+  "message": "Your message here"
 }
 ```
 
-### Chat (Streaming)
+### Bot with URL Summary
 ```
-POST /api/chat/stream
+POST /api/bot
 Content-Type: application/json
 
 {
-  "message": "Your message here",
-  "model": "gpt-4o-mini" // optional
+  "message": "Summarize this article: https://example.com/article",
+  "bot": "summary"
+}
+```
+Extracts the first URL from the message, fetches its content, and generates an AI summary.
+
+### Bot (Streaming)
+```
+POST /api/bot/stream
+Content-Type: application/json
+
+{
+  "message": "Your message here"
 }
 ```
 Returns server-sent events (SSE) stream.
 
-### Chat (Conversation)
+### Bot Streaming with URL Summary
 ```
-POST /api/chat/conversation
+POST /api/bot/stream
+Content-Type: application/json
+
+{
+  "message": "Summarize https://example.com",
+  "bot": "summary"
+}
+```
+Streams the summary of the URL content.
+
+### Conversation (Multi-turn)
+```
+POST /api/bot/conversation
 Content-Type: application/json
 
 {
