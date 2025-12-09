@@ -1,8 +1,0 @@
-### Bot summary request
-POST http://localhost:3000/api/bot
-Content-Type: application/json
-
-{
-  "message": "다음 기사 내용을 핵심만 간단히 요약해줘: https://www.wowtv.co.kr/NewsCenter/News/Read?articleId=A202511240197&t=NT",
-  "bot": "summary"
-}

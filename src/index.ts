@@ -1,9 +1,9 @@
-import Fastify from 'fastify';
-import cors from '@fastify/cors';
-import dotenv from 'dotenv';
-import { aiRoutes } from './routes/ai';
+import Fastify from "fastify";
+import cors from "@fastify/cors";
+import dotenv from "dotenv";
+import OGRoute from "./routes/og";
 
-dotenv.config({ path: '.env.local' });
+dotenv.config({ path: ".env.local" });
 
 const fastify = Fastify({
   logger: true,
@@ -15,14 +15,14 @@ const start = async () => {
       origin: true,
     });
 
-    await fastify.register(aiRoutes, { prefix: '/api' });
+    await fastify.register(OGRoute, { prefix: "/og" });
 
-    fastify.get('/health', async () => {
-      return { status: 'ok', timestamp: new Date().toISOString() };
+    fastify.get("/health", async () => {
+      return { status: "ok", timestamp: new Date().toISOString() };
     });
 
-    const port = parseInt(process.env.PORT || '3000', 10);
-    await fastify.listen({ port, host: '0.0.0.0' });
+    const port = parseInt(process.env.PORT || "3000", 10);
+    await fastify.listen({ port, host: "0.0.0.0" });
 
     console.log(`Server is running on http://localhost:${port}`);
   } catch (err) {
