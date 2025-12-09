@@ -39,7 +39,7 @@ interface OpenGraphResponse {
 
 export default async function openGraphRoutes(fastify: FastifyInstance) {
   fastify.get<{ Querystring: OpenGraphQuerystring; Reply: OpenGraphResponse }>(
-    "/og",
+    "/",
     async (
       request: FastifyRequest<{ Querystring: OpenGraphQuerystring }>,
       reply: FastifyReply,
