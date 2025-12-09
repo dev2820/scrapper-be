@@ -20,18 +20,31 @@ const scraper = metascraper([
   metascraperUrl(),
 ]);
 
-interface OpenGraphRequest {
+interface OpenGraphQuerystring {
   url: string;
 }
 
+interface OpenGraphResponse {
+  url?: string;
+  title?: string;
+  description?: string;
+  siteName?: string;
+  image?: string;
+  favicon?: string;
+  author?: string;
+  date?: string;
+  publisher?: string;
+  logo?: string;
+}
+
 export default async function openGraphRoutes(fastify: FastifyInstance) {
-  fastify.post<{ Body: OpenGraphRequest }>(
+  fastify.get<{ Querystring: OpenGraphQuerystring; Reply: OpenGraphResponse }>(
     "/og",
     async (
-      request: FastifyRequest<{ Body: OpenGraphRequest }>,
+      request: FastifyRequest<{ Querystring: OpenGraphQuerystring }>,
       reply: FastifyReply,
-    ) => {
-      const { url } = request.body;
+    ): Promise<OpenGraphResponse> => {
+      const { url } = request.query;
 
       if (!url) {
         return reply.code(400).send({ error: "URL is required" });
